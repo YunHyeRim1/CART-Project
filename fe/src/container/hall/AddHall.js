@@ -40,7 +40,7 @@ const AddHall = ( )  => {
       throw err;
     })}
   }
-
+  
   return (
     <form onSubmit={e => e.preventDefault()}>
       <FormContent>

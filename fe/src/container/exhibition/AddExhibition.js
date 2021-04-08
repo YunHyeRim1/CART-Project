@@ -5,10 +5,11 @@ import { FormControl } from 'components/index';
 import { FormHeader, Title, FormContent, FormAction } from 'container/exhibition/AddExhibition.style';
 import DatePicker from "react-datepicker"; 
 import axios from 'axios'
+import { useHistory } from 'react-router';
 
 const AddExhibition = ( )  => {
-  const { errors } = useForm();
-
+  const { errors, register, handleSubmit } = useForm();
+  const history = useHistory();
   const [ addExhbn, setAddExhibition ] = useState({
     exhbnTitle: "", hallLocation: "", startDate: new Date(), endDate: new Date(), exhbnGenre: "",
     exhbnPrice: "", exhbnArtist: "", exhbnContent: "", exhbnImage: ""
@@ -19,6 +20,7 @@ const AddExhibition = ( )  => {
   const onChange = useCallback(e => {
     setAddExhibition({...addExhbn, [e.target.name]: e.target.value})
   })
+  
   const URL = 'http://localhost:8080'
   const add = e => {
     e.preventDefault()
@@ -35,7 +37,7 @@ const AddExhibition = ( )  => {
     }) 
     .then(resp => {
       alert(`전시 등록 완료`)
-      window.location.reload()
+      history.push('/exhbnList')
     })
     .catch(err => {
       alert(`전시 등록 실패`)
@@ -56,7 +58,7 @@ const AddExhibition = ( )  => {
               htmlFor="exhbnImage"
               // error={errors.exhbnImage && <span>이 입력란을 작성해주세요!</span>}
               >
-            <input name="exhbnImage" value={exhbnImage}
+            <input name="exhbnImage" value={exhbnImage} ref={register}
                    type="file" accept="image/*" 
                    onChange = { onChange } />     
             </FormControl>
@@ -67,8 +69,7 @@ const AddExhibition = ( )  => {
             <FormControl
               label="제목"
               htmlFor="exhbnTitle"
-              
-              // error={errors.exhbnTitle && <span>이 입력란을 작성해주세요!</span>}
+              error={errors.exhbnTitle && <span>이 입력란을 작성해주세요!</span>}
             >
             <Input name="exhbnTitle" value={exhbnTitle} id="exhbnTitle" 
                    placeholder="전시 제목을 입력해주세요." 

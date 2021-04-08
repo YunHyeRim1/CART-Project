@@ -39,11 +39,11 @@ const HallDetail = ({ match }) => {
     e.preventDefault()
     window.confirm("전시관을 삭제하시겠습니까?")
     axios({
-      url: 'http://localhost:8080/halls',
+      url: 'http://localhost:8080/halls/'+ match.params.hallNum,
       method: 'delete',
       headers: {
         'Content-Type'  : 'application/json',
-        'Authorization' : 'JWT fefege..'
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
       },
       data: { 
         hallNum: match.params.hallNum 
@@ -59,14 +59,9 @@ const HallDetail = ({ match }) => {
     })
   }
 
-  const {
-    title,
-    content,
-  } = props;
-
   return (
     <HallPageWrapper>
-     {/*  { localStorage.getItem("user").admin === '관리자' ? */}
+      {/*  { localStorage.getItem("user").admin === '관리자' ?  */}
         <ButtonBox>
           <Link to={ADD_HALL_PAGE}>
           <button className="btn">등록</button>
@@ -76,8 +71,8 @@ const HallDetail = ({ match }) => {
           </Link>
           <button className="cancle-btn" onClick={ deleteHall }>삭제</button>
         </ButtonBox>
- {/*        : <></>
-        } */}
+     {/*     : <></>
+        }  */}
       <Container>
         <Row gutter={30}>
           <VerticalTab />

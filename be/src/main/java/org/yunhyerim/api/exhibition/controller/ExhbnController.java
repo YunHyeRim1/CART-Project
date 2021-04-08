@@ -66,12 +66,17 @@ public class ExhbnController extends AbstractController<Exhbn> {
 		if(!(t.getExhbnImage().equals(e.getExhbnImage()) || t.getExhbnImage().equals(""))) {
 			e.setExhbnImage(t.getExhbnImage());
 		}
-		return ResponseEntity.ok(service.save(t));
+		return ResponseEntity.ok(service.save(e));
 	}
 
 	@DeleteMapping("")
-	public ResponseEntity<Long> delete(@RequestBody Exhbn t) {
+	public ResponseEntity<Long> delete(@PathVariable Exhbn t) {
 		return ResponseEntity.ok(service.delete(t));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteById(@PathVariable long id){
+		return ResponseEntity.ok(service.deleteById(id));
 	}
 
 	@GetMapping("/count")

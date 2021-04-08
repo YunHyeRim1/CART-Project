@@ -121,11 +121,6 @@ export const ButtonGroup = styled.div`
         left: 89px;
         bottom: 27px;
       }
-      @media (max-width: 1200px) {
-        position: relative;
-        left: 89px;
-        bottom: 27px;
-      }
     }
   }
 `;

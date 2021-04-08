@@ -8,4 +8,5 @@ public interface ExhbnService {
 			String hallLocation, long exhbnNum);
 			
 	public Exhbn findByExhbnNum(long exhbnNum);
+	public String deleteById(long id);
 }

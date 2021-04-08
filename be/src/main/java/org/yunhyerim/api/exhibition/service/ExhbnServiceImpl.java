@@ -21,6 +21,7 @@ public class ExhbnServiceImpl extends AbstractService<Exhbn> implements ExhbnSer
 	
 	@Override public long save(Exhbn e) { return (exhbnrepository.save(e) != null) ? 1 : 0;}
 	@Override public long delete(Exhbn e) { exhbnrepository.delete(e); return(getOne(e.getExhbnNum()) == null) ? 1 : 0;}
+	@Override public String deleteById(long id) { exhbnrepository.deleteById(id); return "SUCCESS"; }
 	@Override public long count() { return exhbnrepository.count();}
 	@Override public Exhbn getOne(long id) { return exhbnrepository.getOne(id);}
 	@Override public Optional<Exhbn> findById(long id) { return exhbnrepository.findById(id);}

@@ -41,15 +41,12 @@ const SinglePage = ({ match }) => {
     e.preventDefault()
     window.confirm("전시를 삭제하시겠습니까?")
     axios({
-      url: 'http://localhost:8080/exhbns',
+      url: 'http://localhost:8080/exhbns/'+ match.params.exhbnNum ,
       method: 'delete',
       headers: {
         'Content-Type'  : 'application/json',
-        'Authorization' : 'JWT fefege..'
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
       },
-      data: { 
-        exhbnNum: match.params.exhbnNum 
-      }
     })
     .then(resp => {
       alert(`삭제 완료`)
@@ -65,7 +62,7 @@ const SinglePage = ({ match }) => {
 
   return (
     <SinglePageWrapper>
-       {/*  { localStorage.getItem("user").admin === '관리자' ? */}
+     {/*   { localStorage.getItem("user").admin === '관리자' ? */}
         <ButtonBox>
           <Link to={ADD_EXHBN_PAGE}>
           <button className="btn">등록</button>
@@ -75,7 +72,7 @@ const SinglePage = ({ match }) => {
           </Link>
           <button className="cancle-btn" onClick={ deleteExhbn }>삭제</button>
         </ButtonBox>
-{/*         : <></>
+      {/*    : <></>
         } */}
       <Container>
         <Row gutter={30}>

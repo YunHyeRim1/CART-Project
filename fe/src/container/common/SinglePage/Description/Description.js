@@ -12,14 +12,14 @@ const Description = ({
   locationMetaStyle,
   contentStyle,
 }) => {
- 
+
+  let codes = `${content}`;
   return (
     <Element name="overview" className="overview">
       <DescriptionWrapper>
         <Heading as="h2" content={title} {...titleStyle} />
         <Text content={location} {...locationMetaStyle} />
-        {/* <Text content={content} {...contentStyle} /> */}
-        <span>{content}</span>
+        <span dangerouslySetInnerHTML={ {__html: codes} } {...contentStyle}></span>
       </DescriptionWrapper>
     </Element>
   );

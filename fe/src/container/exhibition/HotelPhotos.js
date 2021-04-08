@@ -9,34 +9,7 @@ import { FormHeader, Title, FormContent, FormAction } from 'container/exhibition
 import axios from 'axios'
 
 const HotelPhotos = ({ setStep }) => {
-  const { register, errors, setValue, handleSubmit } = useForm({
-    
- /*    defaultValues: {
-      hotelPhotos: [
-        {
-          uid: '1',
-          name: 'hotel-1.png',
-          status: 'done',
-          url:
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-        {
-          uid: '2',
-          name: 'hotel-2.png',
-          status: 'done',
-          url:
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-        {
-          uid: '3',
-          name: 'hotel-3.png',
-          status: 'done',
-          url:
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        },
-      ],
-    }, */
-  });
+  const { register, errors, setValue, handleSubmit } = useForm({});
   const [ exhbnImage, setExhbnImage ] = useState('')
   const { action, state } = useStateMachine(AddListingAction);
 
@@ -44,43 +17,45 @@ const HotelPhotos = ({ setStep }) => {
 
   const add = e => {
     e.preventDefault()
+    const file = document.getElementById('exhbnImage');
+    if (file.files.length > 0) {
+      var formData = new FormData();
+      formData.append('file', file.files[0]);
+  
     axios.post(URL,{
       exhbnImage,
     })
     .then(resp => {
       alert(`포스터 등록 완료`)
+      console.log(resp);
     })
     .catch(err => {
       alert(`포스터 등록 실패`)
       throw err;
-    })
+    });
+  }
 }
-
-  useEffect(() => {
-    register({ name: {exhbnImage} }, { required: true });
-  }, [register]);
 
   const onSubmit = (data) => {
     action(data);
     setStep(3);
+    console.log(data)
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} id="form" method="post" action="/upload" enctype="multipart/form-data">
       <FormContent>
         <FormHeader>
           <Title>전시회 등록</Title>
         </FormHeader>
-        <FormControl
+        <input
+          name="file" id="exhbnImage" accept="image/*"
+          type="file" ref={register}
+/*           onChange={onChange} */ />
+        {/* <FormControl
           error={errors.exhbnImage && <span>이 입력란을 작성해주세요!</span>}
         >
-          <DragAndDropUploader
-            name="포스터"
-            id="exhbnImage"
-            accept="image/*"
-            onUploadChange={(data) => setExhbnImage('exhbnImage', data)}
-          />
-        </FormControl>
+        </FormControl> */}
       </FormContent>
       <FormAction>
         <div className="inner-wrapper">

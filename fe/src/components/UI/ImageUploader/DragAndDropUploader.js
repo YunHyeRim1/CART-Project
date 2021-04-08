@@ -7,7 +7,7 @@ const DraggerWrapper = styled.div``;
 
 const { Dragger } = Upload;
 
-const photos = [
+/* const photos = [
   {
     uid: '1',
     name: 'hotel-1.png',
@@ -15,28 +15,14 @@ const photos = [
     url:
       'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
   },
-  {
-    uid: '2',
-    name: 'hotel-2.png',
-    status: 'done',
-    url:
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  },
-  {
-    uid: '3',
-    name: 'hotel-3.png',
-    status: 'done',
-    url:
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  },
-];
+]; */
 
 const DragAndDropUploader = ({ onUploadChange }) => {
   const props = {
     name: 'file',
     multiple: true,
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    defaultFileList: photos,
+    //defaultFileList: photos,
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {

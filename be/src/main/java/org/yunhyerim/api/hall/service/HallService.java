@@ -8,4 +8,5 @@ public interface HallService {
 	public Hall findByHallNum(long hallNum);
 	public long update(String hallName, String hallLocation, String hallTime, String hallClosed,
 					   String hallPnumber, String hallInfo, String Image, long hallNum);
+	public String deleteById(long id);
 }

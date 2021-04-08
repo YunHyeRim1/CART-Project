@@ -60,6 +60,11 @@ public class HallController extends AbstractController<Hall> {
 		return ResponseEntity.ok(service.delete(t));
 	}
 
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteById(@PathVariable long id){
+		return ResponseEntity.ok(service.deleteById(id));
+	}
+
 	@GetMapping("/count")
 	public ResponseEntity<Long> count() {
 		return ResponseEntity.ok(service.count());

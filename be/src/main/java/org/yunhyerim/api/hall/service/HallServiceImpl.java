@@ -24,6 +24,7 @@ public class HallServiceImpl extends AbstractService<Hall> implements HallServic
 		hallRepository.delete(hall); 
 		return(getOne(hall.getHallNum()) == null) ? 1 : 0;
 	}
+	@Override public String deleteById(long id) { hallRepository.deleteById(id); return "SUCCESS"; }
 	@Override 
 	public long count() {
 		return hallRepository.count();

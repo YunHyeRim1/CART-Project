@@ -16,7 +16,6 @@ export const UPDATE_EXHBN_PAGE = '/update-exhbn';
 export const ADD_HALL_PAGE = '/add-hall';
 export const UPDATE_HALL_PAGE = '/update-hall';
 
-
 // Agent Profile Page Section
 export const USER_PROFILE_PAGE = '/profile';
 export const USER_ACCOUNT_SETTINGS_PAGE = '/account-settings';
