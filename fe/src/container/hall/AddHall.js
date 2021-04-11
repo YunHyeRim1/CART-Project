@@ -27,7 +27,7 @@ const AddHall = ( )  => {
       method: 'post',
       headers: {
         'Content-Type'  : 'application/json',
-        'Authorization' : 'JWT fefege..'
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
       },
       data: addHall
     }) 

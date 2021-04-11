@@ -3,7 +3,7 @@ import { themeGet } from '@styled-system/theme-get';
 const UserDetailsPage = styled.div``;
 
 export const BannerSection = styled.div`
-  height: 400px;
+  height: 200px;
   background-color: #e9e8ec;
   position: relative;
   @media (max-width: 480px) {

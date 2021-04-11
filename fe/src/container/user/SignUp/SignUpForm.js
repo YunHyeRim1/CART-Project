@@ -3,10 +3,17 @@ import { useHistory } from 'react-router';
 import axios from "axios";
 import { useForm, Controller } from 'react-hook-form';
 import { MdLockOpen } from 'react-icons/md';
-import { Input, Switch, Button } from 'antd';
+import { Input, Switch, message, Button } from 'antd';
 import { FormControl } from 'components/index';
 import { FieldWrapper, SwitchWrapper, Label } from 'container/user/Auth.style';
 import { LOGIN_PAGE } from 'settings/constant'
+import styled from "styled-components";
+
+const StyledButton = styled.button`
+color: #ffffff;
+background-color: #97abd1;
+box-shadow: #97abd1 0 0px 0px 2px inset;
+`;
 
 const SignUpForm = () => {
   const { control } = useForm();
@@ -39,7 +46,33 @@ const SignUpForm = () => {
       alert('회원가입 실패')
     })}
   }
-
+  const checkId = e => {
+    e.preventDefault()
+    axios.get("http://localhost:8080/users/checkId/"+userRegister.username)
+    .then(resp => {
+      checkMessage(resp.data)
+    })
+    .catch(err => {
+      alert(err)
+    })
+  }
+  const checkEmail = e => {
+    e.preventDefault()
+    axios.get("http://localhost:8080/users/checkEmail/"+userRegister.email)
+    .then(resp => {
+      checkMessage(resp.data)
+    })
+    .catch(err => {
+      alert(err)
+    })
+  }
+  const checkMessage = (id) => {
+    if(id){
+      alert(`이미 존재합니다.`)
+    }else{
+      alert(`사용 가능합니다.`)
+    }
+  }
   return (
     <form >
       <FormControl
@@ -52,6 +85,7 @@ const SignUpForm = () => {
           control={control}
           rules={{ required: true }}
         />
+        <StyledButton onClick={checkId}>중복확인</StyledButton>
       </FormControl>
       <FormControl
         label="비밀번호"
@@ -87,14 +121,15 @@ const SignUpForm = () => {
           control={control}
           rules={{ required: true }}
         />
+        <StyledButton onClick={checkEmail}>중복확인</StyledButton>
       </FormControl>
       <FormControl
         label="성별"
       >
         <select name="gender" value={gender} defaultValue="" onChange={ onChange }>
         <option value="selection">선택</option>
-          <option value="F">여성</option>
-          <option value="M">남성</option>
+          <option type="radio" value="F">여성</option>
+          <option type="radio" value="M">남성</option>
         </select>
       </FormControl>
       <FormControl
@@ -138,16 +173,6 @@ const SignUpForm = () => {
           <Controller
             as={<Switch />}
             name="rememberMe"
-            defaultValue={false}
-            valueName="checked"
-            control={control}
-          />
-          <Label>아이디 기억하기</Label>
-        </SwitchWrapper>
-        <SwitchWrapper>
-          <Controller
-            as={<Switch />}
-            name="termsAndConditions"
             defaultValue={false}
             valueName="checked"
             control={control}

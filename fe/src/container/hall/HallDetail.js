@@ -23,7 +23,8 @@ const HallDetail = ({ match }) => {
   const URL = `http://localhost:8080/halls/find/`
 
   useEffect(e => {
-    axios.get(URL+match.params.hallNum)
+    axios.get(URL+match.params.hallNum,
+            { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
     .then(resp => {
       setHallDetail(resp.data)
     })

@@ -7,16 +7,6 @@ const DraggerWrapper = styled.div``;
 
 const { Dragger } = Upload;
 
-/* const photos = [
-  {
-    uid: '1',
-    name: 'hotel-1.png',
-    status: 'done',
-    url:
-      'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  },
-]; */
-
 const DragAndDropUploader = ({ onUploadChange }) => {
   const props = {
     name: 'file',

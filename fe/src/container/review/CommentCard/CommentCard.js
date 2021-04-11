@@ -1,3 +1,4 @@
+  
 import React from 'react';
 import { Popover } from 'antd';
 import moment from 'moment';
@@ -46,6 +47,8 @@ const CommendCard = (props) => {
           
         </div>
       </div>
+      <button className="btn">수정</button>
+      <button className="cancle-btn">예매취소</button>
     </div>
   );
 }

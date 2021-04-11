@@ -80,13 +80,13 @@ const HallWrapper = styled.div`
   
     a.button {
       color: #ffffff;
-      background-color: #e3c1c7;
-      box-shadow: #e3c1c7 0 0px 0px 2px inset;
+      background-color: #302f2f;
+
     }
   
     a.button:hover {
-      color: #ffffff;
-      box-shadow: #b3848c 0 0px 0px 40px inset;
+      color: #302f2f;
+      background-color: #edbebe;
     }
   }
 

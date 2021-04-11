@@ -1,6 +1,7 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useState, useEffect } from 'react';
 import { Route, NavLink, Link } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
+import axios from 'axios'
 import {
   IoLogoTwitter,
   IoLogoFacebook,
@@ -15,7 +16,8 @@ import useDataApi from 'library/hooks/useDataApi';
 import {
   ADD_EXHBN_PAGE,
   USER_PROFILE_FAVOURITE,
-  USER_PROFILE_CONTACT
+  MY_REVIEW_LIST,
+  UPDATE_USER_PAGE
 } from 'settings/constant';
 import AgentDetailsPage, {
   BannerSection,
@@ -26,6 +28,8 @@ import AgentDetailsPage, {
   SocialAccount,
   NavigationArea,
 } from 'container/user/MyPage/AccountDetails/UserDetails.style';
+import UpdateUser from 'container/user/MyPage/AccountDetails/UpdateUser';
+import MyReviewList from './MyReviewList'
 
 const ProfileNavigation = (props) => {
   const { match, className } = props;
@@ -45,17 +49,16 @@ const ProfileNavigation = (props) => {
             </NavLink>
           </Menu.Item>
           <Menu.Item key="2">
-            <NavLink to={`${match.url}${USER_PROFILE_CONTACT}`}>
+            <NavLink to={`${match.url}${MY_REVIEW_LIST}`}>
               내가 쓴 리뷰
             </NavLink>
           </Menu.Item>
+          <Menu.Item key="3">
+            <NavLink to={`${match.url}${UPDATE_USER_PAGE}`}>
+              회원정보수정
+            </NavLink>
+          </Menu.Item>
         </Menu>
-
-        {loggedIn && (
-          <Link className="add_card" to={ADD_EXHBN_PAGE}>
-            <IoIosAdd /> Add Hotel
-          </Link>
-        )}
       </Container>
     </NavigationArea>
   );
@@ -65,15 +68,23 @@ const ProfileRoute = (props) => {
   const { match } = props;
   return (
     <Container fluid={true}>
-      <Route
+      <Route exact
         path={`${match.path}${USER_PROFILE_FAVOURITE}`}
         component={UserFavItemLists}
+      />
+      <Route
+        path={`${match.path}${MY_REVIEW_LIST}`}
+        component={MyReviewList}
+      />
+      <Route
+        path={`${match.path}${UPDATE_USER_PAGE}`}
+        component={UpdateUser}
       />
     </Container>
   );
 };
 
-const AgentProfileInfo = () => {
+const AgentProfileInfo = ({ match }) => {
   const { data, loading } = useDataApi('/data/agent.json');
   if (isEmpty(data) || loading) return <Loader />;
   const {
@@ -85,8 +96,8 @@ const AgentProfileInfo = () => {
     social_profile,
   } = data[0];
 
-  const username = `${last_name} ${first_name}`;
-
+  const user = JSON.parse(localStorage.getItem("user"))
+ 
   return (
     <Fragment>
       <BannerSection>
@@ -103,38 +114,9 @@ const AgentProfileInfo = () => {
           </ProfileImage>
           <ProfileInformationArea>
             <ProfileInformation>
-              <Heading content={username} />
+              <Heading content={`${user.name} 님의 마이페이지`} />
               <Text content={content} />
             </ProfileInformation>
-            <SocialAccount>
-              <Popover content="Twitter">
-                <a
-                  href={social_profile.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <IoLogoTwitter className="twitter" />
-                </a>
-              </Popover>
-              <Popover content="Facebook">
-                <a
-                  href={social_profile.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <IoLogoFacebook className="facebook" />
-                </a>
-              </Popover>
-              <Popover content="Instagram">
-                <a
-                  href={social_profile.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <IoLogoInstagram className="instagram" />
-                </a>
-              </Popover>
-            </SocialAccount>
           </ProfileInformationArea>
         </Container>
       </UserInfoArea>
@@ -142,7 +124,7 @@ const AgentProfileInfo = () => {
   );
 };
 
-export default function UserDetailsPage(props) {
+const UserDetailsPage = (props) => {
   return (
     <AgentDetailsPage>
       <AuthProvider>
@@ -153,3 +135,5 @@ export default function UserDetailsPage(props) {
     </AgentDetailsPage>
   );
 }
+
+export default UserDetailsPage;

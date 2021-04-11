@@ -16,6 +16,7 @@ const BookingInfo = ( props ) => {
     axios.get(URL+props.exhbnNum)
     .then(reps => {
       setExhbnDetail(reps.data)
+
     })
     .catch(err => {
       alert(`실패`)

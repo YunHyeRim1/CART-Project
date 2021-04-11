@@ -22,7 +22,8 @@ const UpdateExhibition = ({ match }) => {
   const [ exhbnNum, setExhbnNum ] = useState('')
 
   useEffect(e => {
-    axios.get("http://localhost:8080/exhbns/one/"+match.params.exhbnNum)
+    axios.get("http://localhost:8080/exhbns/one/"+match.params.exhbnNum,
+            { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
     .then((resp) => {
       setExhbnDetail(resp.data)
     })

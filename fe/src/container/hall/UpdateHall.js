@@ -20,7 +20,8 @@ const UpdateHall = ({ match }) => {
   const [ hallNum, setHallNum ] = useState('')
 
   useEffect(e => {
-    axios.get("http://localhost:8080/halls/find/"+match.params.hallNum)
+    axios.get("http://localhost:8080/halls/find/"+match.params.hallNum,
+            { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
     .then((resp) => {
       setHallDetail(resp.data)
       setHallNum(resp.data)

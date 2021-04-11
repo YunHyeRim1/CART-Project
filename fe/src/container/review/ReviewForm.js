@@ -1,43 +1,44 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Row, Col, Input, Rate, Checkbox, Button } from 'antd';
-import { FormControl, RadioGroup, DragAndDropUploader } from 'components/index';
+import FormControl from 'components/UI/FormControl/FormControl';
+import RadioGroup from 'components/UI/RadioGroup/RadioGroup';
+import DragAndDropUploader from 'components/UI/ImageUploader/DragAndDropUploader';
 import { Form, Label, GroupTitle, Description } from 'container/review/Review.style';
 import axios from 'axios';
 
 const ReviewForm = () => {
-  const { control, register, errors, setValue, handleSubmit } = useForm();
-  const [review,setReview ] = useState({
-    reviewTitle : "",
-    reviewContent : "",
-    regDate : "",
-    score : 0,
-  })
-
-  const{reviewTitle, reviewContent, regDate, score} = review
-  const onChange = useCallback(e => {
-    setReview({...review, [e.target.name]: e.target.value})
-  })
- 
+  const { control, register, errors, setValue, handleSubmit } = useForm({
+    mode: 'onChange',
+    });
+  
+  const [ reviewTitle, setReviewTitle ] = useState('')
+  const [ reviewContent, setReviewContent ] = useState('')
+  const [ regDate ] = useState(new Date())
+  const [ score, setScore ] = useState(0)
   const desc = ['1', '2', '3', '4', '5'];
 
   const onSubmit = e => {
-    // e.preventDefault()
     axios({
         url: `http://localhost:8080/reviews`,
         method: 'post',
         headers: {'Content-Type':'application/json','Authorization': 'JWT fefege...'},
         data: { reviewTitle, reviewContent, regDate, score }
     }).then(res => {
-        alert(`성공`)
+        alert(`리뷰가 등록되었습니다.`)
         window.location.reload()
     }).catch(err => {
         alert(err.response)
     })
   };
 
+  const handleChange = value => {
+    setScore(value)
+  }
+  
+
   return (
-    <Form onSubmit={e => e.preventDefault()}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormControl
         label="별점"
         htmlFor="score"
@@ -45,29 +46,13 @@ const ReviewForm = () => {
       >
         <span>
         <Rate 
-          tooltips={desc} onChange={ onChange }
+          tooltips={desc} onChange={ handleChange }
           id="score"
-          name="score" value={score}
+          name="score"
           defaultValue=""
         />
           {score ? <span className="ant-rate-text">{desc[score - 1]}</span> : ''}
         </span>
-      </FormControl>
-      <FormControl
-        label="제목"
-        htmlFor="reviewTitle"
-        error={errors.reviewTitle && <span>This field is required!</span>}
-      >
-        <Input 
-          onChange = {onChange}
-          id="reviewTitle"
-          name="reviewTitle" value={reviewTitle}
-          defaultValue=""
-          control={control}
-          placeholder="전시회 제목을 입력해주세요"
-          rules={{
-            required: true
-          }}/>
       </FormControl>
       <FormControl
         label="내용"
@@ -75,9 +60,9 @@ const ReviewForm = () => {
         error={errors.reviewContent && <span>This field is required!</span>}
       >
         <Input.TextArea 
-          rows={5} onChange = {onChange}
+          rows={5} onChange = {e => {setReviewContent(`${e.target.value}`)}}
           id="reviewContent"
-          name="reviewContent" value={reviewContent}
+          name="reviewContent"
           defaultValue=""
           control={control}
           placeholder="전시회는 어떠셨나요?"
@@ -105,8 +90,7 @@ const ReviewForm = () => {
         />
       </FormControl>
       <FormControl className="submit-container">
-        <Button htmlType="submit" type="primary" size="large"
-                onClick = {onSubmit}>
+        <Button htmlType="submit" type="primary" size="large">
           작성 완료
         </Button>
       </FormControl>
@@ -115,3 +99,22 @@ const ReviewForm = () => {
 };
 
 export default ReviewForm;
+
+/*
+      <FormControl
+        label="제목"
+        htmlFor="reviewTitle"
+        error={errors.reviewTitle && <span>This field is required!</span>}
+      >
+        <Input 
+          onChange = {e => {setReviewTitle(`${e.target.value}`)}}
+          id="reviewTitle"
+          name="reviewTitle"
+          defaultValue=""
+          control={control}
+          placeholder="전시회 제목을 입력해주세요"
+          rules={{
+            required: true,
+          }}/>
+      </FormControl>
+*/

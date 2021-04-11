@@ -24,7 +24,8 @@ const SinglePage = ({ match }) => {
   const URL = `http://localhost:8080/exhbns/one/`
   
   useEffect(e => {
-    axios.get(URL+match.params.exhbnNum)
+    axios.get(URL+match.params.exhbnNum,
+              { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
     .then(resp => {
       setExhbnDetail(resp.data)
     })

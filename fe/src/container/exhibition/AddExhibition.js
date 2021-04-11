@@ -1,14 +1,15 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { Row, Col, Input, Button } from 'antd';
-import { FormControl } from 'components/index';
 import { FormHeader, Title, FormContent, FormAction } from 'container/exhibition/AddExhibition.style';
 import DatePicker from "react-datepicker"; 
 import axios from 'axios'
 import { useHistory } from 'react-router';
+import { DragAndDropUploader, FormControl } from 'components/index';
+import { ExhbnImageUpload } from 'container';
 
 const AddExhibition = ( )  => {
-  const { errors, register, handleSubmit } = useForm();
+  const { errors, register, handleSubmit, setValue } = useForm();
   const history = useHistory();
   const [ addExhbn, setAddExhibition ] = useState({
     exhbnTitle: "", hallLocation: "", startDate: new Date(), endDate: new Date(), exhbnGenre: "",
@@ -16,22 +17,45 @@ const AddExhibition = ( )  => {
   })
   const { exhbnTitle, hallLocation, startDate, endDate, exhbnGenre, 
           exhbnPrice, exhbnArtist, exhbnContent, exhbnImage } = addExhbn
-  
+
+  const [file, setFile] = useState('');
+  const [previewURL, setPreviewURL] = useState('');
+  const [preview,setPreview] = useState(null);
+
   const onChange = useCallback(e => {
     setAddExhibition({...addExhbn, [e.target.name]: e.target.value})
   })
-  
-  const URL = 'http://localhost:8080'
+/* 
+  useEffect(() => {
+    if(file !== '') //처음 파일 등록하지 않았을 때를 방지
+      setPreview(<img className='img_preview' src={previewURL}></img>);
+    return () => {
+    }
+  }, [previewURL])
+
+  const handleFileOnChange = (e) => { //파일 불러오기
+    e.preventDefault();
+    let file = e.target.files[0];
+    let reader = new FileReader();
+
+    reader.onloadend = (e) => {
+      setFile(file);
+      setPreviewURL(reader.result);
+    }
+    if(file)
+      reader.readAsDataURL(file);
+  }
+  */
   const add = e => {
     e.preventDefault()
     const del = window.confirm("전시회를 등록하시겠습니까?")
-    if(del){
+    if(del) {
     axios({
-      url: URL+'/exhbns', 
+      url: 'http://localhost:8080/exhbns', 
       method: 'post',
       headers: {
         'Content-Type'  : 'application/json',
-        'Authorization' : 'JWT fefege..'
+        'Authorization' : 'Bearer '+localStorage.getItem("token")
       },
       data: addExhbn
     }) 
@@ -46,21 +70,21 @@ const AddExhibition = ( )  => {
   }
  
   return (
-    <form onSubmit={e => e.preventDefault()}>
+    <form onSubmit={e => e.preventDefault()} encType="multipartform-data">
       <FormContent>
         <FormHeader>
           <Title>전시회 등록</Title>
         </FormHeader>
+
         <Row gutter={30}>
           <Col sm={12}>
             <FormControl
               label="전시 포스터"
               htmlFor="exhbnImage"
-              // error={errors.exhbnImage && <span>이 입력란을 작성해주세요!</span>}
-              >
-            <input name="exhbnImage" value={exhbnImage} ref={register}
-                   type="file" accept="image/*" 
-                   onChange = { onChange } />     
+             // error={errors.exhbnTitle && <span>이 입력란을 작성해주세요!</span>}
+            >
+            <input id="exhbnImage" name="exhbnImage" value={exhbnImage} type="file" 
+                   accept="image/*" onChange = { onChange }/>     
             </FormControl>
           </Col>
         </Row>
@@ -69,7 +93,7 @@ const AddExhibition = ( )  => {
             <FormControl
               label="제목"
               htmlFor="exhbnTitle"
-              error={errors.exhbnTitle && <span>이 입력란을 작성해주세요!</span>}
+             // error={errors.exhbnTitle && <span>이 입력란을 작성해주세요!</span>}
             >
             <Input name="exhbnTitle" value={exhbnTitle} id="exhbnTitle" 
                    placeholder="전시 제목을 입력해주세요." 
@@ -113,7 +137,7 @@ const AddExhibition = ( )  => {
             <FormControl
               label="종료 날짜"
               htmlFor="endDate"
-              error={errors.endDate && <span>이 입력란을 작성해주세요!</span>}
+             // error={errors.endDate && <span>이 입력란을 작성해주세요!</span>}
             >
             <DatePicker
               name="endDate"
@@ -168,7 +192,7 @@ const AddExhibition = ( )  => {
         <FormControl
           label="전시 소개"
           htmlFor="exhbnContent"
-          error={errors.exhbnContent && <span>이 입력란을 작성해주세요!</span>}
+          //error={errors.exhbnContent && <span>이 입력란을 작성해주세요!</span>}
         >
         <Input.TextArea rows={5} id="exhbnContent" name="exhbnContent" value={exhbnContent}
                   placeholder="전시 소개글을 입력해주세요." required

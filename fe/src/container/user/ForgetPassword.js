@@ -21,14 +21,9 @@ export default function ForgetPassWord() {
   return (
     <Wrapper>
       <FormWrapper>
-        <Logo
-          withLink
-          linkTo="/"
-          src=""
-          title="TripFinder."
-        />
         <Title>Welcome Back</Title>
-        <TitleInfo>Enter your email to recover your account</TitleInfo>
+        <TitleInfo>가입할 때 적으신 이메일을 입력해주세요
+        </TitleInfo>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl
             label="Email"
@@ -37,10 +32,10 @@ export default function ForgetPassWord() {
               errors.email && (
                 <>
                   {errors.email?.type === 'required' && (
-                    <span>This field is required!</span>
+                    <span>빈 칸을 작성해주세요</span>
                   )}
                   {errors.email?.type === 'pattern' && (
-                    <span>Please enter a valid email address!</span>
+                    <span>이메일 형식에 맞게 작성해주세요</span>
                   )}
                 </>
               )
@@ -72,7 +67,7 @@ export default function ForgetPassWord() {
         </form>
       </FormWrapper>
       <BannerWrapper>
-        <img src="/images/login-page-bg.jpg" alt="Auth page banner" />
+        <img src="/images/signup_page_bg.jpg" alt="Auth page banner" />
       </BannerWrapper>
     </Wrapper>
   );

@@ -22,7 +22,7 @@ import {
   UPDATE_EXHBN_PAGE,
   ADD_IMAGE_PAGE,
   ADD_HALL_PAGE,
-  UPDATE_HALL_PAGE
+  UPDATE_HALL_PAGE,
 } from 'settings/constant';
 
 /**
@@ -185,15 +185,6 @@ const routes = [
         import('./container/hall/UpdateHall'),
       loading: Loading,
       modules: ['UpdateHall'],
-    }),
-  },
-  {
-    path: ADD_IMAGE_PAGE,
-    component: Loadable({
-      loader: () =>
-        import('./container/exhibition/HotelPhotos'),
-      loading: Loading,
-      modules: ['HotelPhotos'],
     }),
   },
 ];

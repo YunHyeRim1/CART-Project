@@ -13,7 +13,7 @@ const Booking = ( { match } ) => {
             <BookingInfo exhbnNum = {match.params.exhbnNum}/>
           </Col>
           <Col span={8}>
-            <BookingForm />
+            <BookingForm/>
           </Col>
         </Row>
         <Divider> C:ART  |  Seoul Museum of Art </Divider>
