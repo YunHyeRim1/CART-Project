@@ -1,7 +1,6 @@
-import React, { useContext, Fragment, useState, useEffect } from 'react';
+import React, { useContext, Fragment } from 'react';
 import { Route, NavLink, Link } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
-import axios from 'axios'
 import {
   IoLogoTwitter,
   IoLogoFacebook,
@@ -11,13 +10,12 @@ import {
 import { Menu, Popover } from 'antd';
 import { Container, Image, Heading, Text, Loader, ProfilePicLoader } from 'components/index';
 import { AuthProvider, AuthContext } from 'context/index';
-import { UserFavItemLists, AgentContact } from 'container/index';
+import { UserFavItemLists, ReviewList, UpdateUser, BookingList } from 'container/index';
 import useDataApi from 'library/hooks/useDataApi';
 import {
-  ADD_EXHBN_PAGE,
   USER_PROFILE_FAVOURITE,
-  MY_REVIEW_LIST,
-  UPDATE_USER_PAGE
+  UPDATE_USER_PAGE,
+  REVIEW_LIST_PAGE
 } from 'settings/constant';
 import AgentDetailsPage, {
   BannerSection,
@@ -25,11 +23,9 @@ import AgentDetailsPage, {
   ProfileImage,
   ProfileInformationArea,
   ProfileInformation,
-  SocialAccount,
   NavigationArea,
 } from 'container/user/MyPage/AccountDetails/UserDetails.style';
-import UpdateUser from 'container/user/MyPage/AccountDetails/UpdateUser';
-import MyReviewList from './MyReviewList'
+import { ButtonBox } from 'container/exhibition/ExhibitionDetail.style';
 
 const ProfileNavigation = (props) => {
   const { match, className } = props;
@@ -49,7 +45,7 @@ const ProfileNavigation = (props) => {
             </NavLink>
           </Menu.Item>
           <Menu.Item key="2">
-            <NavLink to={`${match.url}${MY_REVIEW_LIST}`}>
+            <NavLink to={`${match.url}${REVIEW_LIST_PAGE}`}>
               내가 쓴 리뷰
             </NavLink>
           </Menu.Item>
@@ -69,12 +65,16 @@ const ProfileRoute = (props) => {
   return (
     <Container fluid={true}>
       <Route exact
+        path={`${match.path}`}
+        component={BookingList}
+      />
+      <Route
         path={`${match.path}${USER_PROFILE_FAVOURITE}`}
         component={UserFavItemLists}
       />
       <Route
-        path={`${match.path}${MY_REVIEW_LIST}`}
-        component={MyReviewList}
+        path={`${match.path}${REVIEW_LIST_PAGE}`}
+        component={ReviewList}
       />
       <Route
         path={`${match.path}${UPDATE_USER_PAGE}`}
@@ -96,7 +96,7 @@ const AgentProfileInfo = ({ match }) => {
     social_profile,
   } = data[0];
 
-  const user = JSON.parse(localStorage.getItem("user"))
+  const user = JSON.parse(localStorage.getItem("cartuser"))
  
   return (
     <Fragment>
@@ -114,8 +114,8 @@ const AgentProfileInfo = ({ match }) => {
           </ProfileImage>
           <ProfileInformationArea>
             <ProfileInformation>
-              <Heading content={`${user.name} 님의 마이페이지`} />
-              <Text content={content} />
+              <Heading content={`${user.name} 님의 MY PAGE`} />
+              <Text content={`${user.name}님! 찜한 전시회를 예약해보세요`} />
             </ProfileInformation>
           </ProfileInformationArea>
         </Container>
@@ -135,5 +135,6 @@ const UserDetailsPage = (props) => {
     </AgentDetailsPage>
   );
 }
+
 
 export default UserDetailsPage;

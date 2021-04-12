@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QBooking extends EntityPathBase<Booking> {
 
-    private static final long serialVersionUID = 378995228L;
+    private static final long serialVersionUID = -290190346L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

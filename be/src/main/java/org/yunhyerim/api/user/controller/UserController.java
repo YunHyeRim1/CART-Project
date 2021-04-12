@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import org.yunhyerim.api.user.domain.UserVO;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +28,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,18 +42,54 @@ public class UserController {
 
 	@GetMapping("")
 	public ResponseEntity<List<UserVO>> all(){
-		System.out.println("all: ");
 		return ResponseEntity.ok(userService.all());
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<UserVO>> one(@PathVariable long id){
-		System.out.println("Item One Id: "+id);
-		return ResponseEntity.ok(userService.one(id));
+	public ResponseEntity<UserVO> getOne(@PathVariable long id){
+		return ResponseEntity.ok(userService.getOne(id));
+	}
+	@GetMapping("/findId/{id}")
+	public ResponseEntity<String> findId(@PathVariable long id){
+		return ResponseEntity.ok(userService.findId(id));
+	}
+	@GetMapping("/checkId/{id}")
+	public boolean checkId(@PathVariable String id){
+		return userService.checkId(id);
+	}
+	@GetMapping("/checkEmail/{email}")
+	public boolean checkEmail(@PathVariable String email){
+		return userService.checkEmail(email);
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<String> edit(@PathVariable long id, @RequestBody UserVO user){
-		System.out.println("edit: "+user.toString());
-		return ResponseEntity.ok(userService.edit(user));
+		UserVO u = userService.getOne(id);
+		if(!(u.getPassword().equals(user.getPassword()) || user.getPassword().equals(""))) {
+			u.setPassword(user.getPassword());
+		}
+		if(!(u.getName().equals(user.getName()) || user.getName().equals(""))) {
+			u.setName(user.getName());
+		}
+		if(!(u.getEmail().equals(user.getEmail()) || user.getEmail().equals(""))) {
+			u.setEmail(user.getEmail());
+		}
+		if(!(u.getPreferGenre().equals(user.getPreferGenre()) || user.getPreferGenre().equals(""))) {
+			u.setPreferGenre(user.getPreferGenre());
+		}
+		if(!(u.getPhoneNumber().equals(user.getPhoneNumber()) || user.getPhoneNumber().equals(""))) {
+			u.setPhoneNumber(user.getPhoneNumber());
+		}
+		if(u.getPreferGenre().equals("painting")){
+			u.setPreferGenre("회화");
+		}else if(u.getPreferGenre().equals("craft")){
+			u.setPreferGenre("공예");
+		}else if(u.getPreferGenre().equals("media")){
+			u.setPreferGenre("미디어");
+		}else if(u.getPreferGenre().equals("sculpture")){
+			u.setPreferGenre("조각");
+		}else if(u.getPreferGenre().equals("installation")){
+			u.setPreferGenre("설치");
+		}
+		return ResponseEntity.ok(userService.save(u));
 	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id){
@@ -81,10 +112,18 @@ public class UserController {
 			@ApiResponse(code = 403, message = "Access denied"),
 			@ApiResponse(code = 422, message = "Username is already in use") })
 	public String signup(@ApiParam("Signup User") @RequestBody UserDTO user) {
+		switch (user.getPreferGenre()){
+			case "painting": user.setPreferGenre("회화"); break;
+			case "media": user.setPreferGenre("미디어"); break;
+			case "sculpture": user.setPreferGenre("조각"); break;
+			case "craft": user.setPreferGenre("공예"); break;
+			case "installation": user.setPreferGenre("설치"); break;
+			default : user.setPreferGenre("회화"); break;
+		}
 		return userService.signup(modelMapper.map(user, UserVO.class));
 	}
 
-	@DeleteMapping(value = "/{username}")
+	@DeleteMapping(value = "/delete/{username}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "${UserController.delete}", authorizations = { @Authorization(value = "apiKey") })
 	@ApiResponses(value = { //
@@ -97,7 +136,7 @@ public class UserController {
 		return username;
 	}
 
-	@GetMapping(value = "/{username}")
+	@GetMapping(value = "/id/{username}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiOperation(value = "${UserController.search}", response = UserResponseDTO.class, authorizations = {
 			@Authorization(value = "apiKey") })
@@ -121,7 +160,6 @@ public class UserController {
 	public UserResponseDTO whoami(HttpServletRequest req) {
 		return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
 	}
-
 	@GetMapping("/refresh")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	public String refresh(HttpServletRequest req) {

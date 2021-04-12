@@ -8,12 +8,12 @@ import useDataApi from 'library/hooks/useDataApi';
 import { EXHBN_DETAIL_PAGE } from 'settings/constant';
 import ListingWrapper, { PostsWrapper } from 'container/exhibition/Listing/Listing.style';
 
-const Listing = ({ location, history }) => {
+const ShowingListing = ({ location, history }) => {
 
   const [exhbnList, setExhbnList] = useState([])
 
   const { width } = useWindowSize();
-  const { data, loading, loadMoreData, total, limit } = useDataApi('http://localhost:8080/exhbns/all');
+  const { data, loading, loadMoreData, total, limit } = useDataApi('http://localhost:8080/exhbns/now');
   let columnWidth = [1 / 1, 1 / 2, 1 / 3, 1 / 4, 1 / 5];
 
   return (
@@ -49,4 +49,4 @@ const Listing = ({ location, history }) => {
     </>
   );
 }
-export default Listing;
+export default ShowingListing;

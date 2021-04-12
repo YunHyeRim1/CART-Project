@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QRecommend extends EntityPathBase<Recommend> {
 
-    private static final long serialVersionUID = -771737156L;
+    private static final long serialVersionUID = -563034474L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

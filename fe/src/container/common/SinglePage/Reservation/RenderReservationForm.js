@@ -36,6 +36,8 @@ const RenderReservationForm = ( props ) => {
   };
   const onClick = e => {
     e.preventDefault();
+    sessionStorage.setItem("price", props.price)
+    sessionStorage.setItem("exhbnNum", props.number)
     sessionStorage.setItem("tickets", tickets)
     sessionStorage.setItem("bookDate", bookDate)
     { localStorage.getItem("token") !== null ? 
@@ -58,23 +60,21 @@ const RenderReservationForm = ( props ) => {
       </FieldWrapper>
       <FieldWrapper>
         <ItemWrapper>
-                <strong>매수</strong>
-                <InputIncDec
-                  id="adult"
-                  increment={() => handleIncrement(tickets)}
-                  decrement={() => handleDecrement(tickets)}
-                  onChange={handleIncDecOnChange}
-                  value={tickets}
-                />
+          <HtmlLabel htmlFor="dates" content="매수" />
+          <InputIncDec
+            id="adult"
+            increment={() => handleIncrement(tickets)}
+            decrement={() => handleDecrement(tickets)}
+            onChange={handleIncDecOnChange}
+            value={tickets}
+          />
          </ItemWrapper>
       </FieldWrapper>
       <FormActionArea>
-        <Link to={`${BOOKING_PAGE}/${props.number}`}>
         <Button htmlType="submit" type="primary" 
                 onClick = {onClick}>
           예매하기
         </Button>
-        </Link>
       </FormActionArea>
     </ReservationFormWrapper>
   );

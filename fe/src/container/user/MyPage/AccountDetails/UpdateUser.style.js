@@ -8,27 +8,23 @@ const Wrapper = styled.div`
   width: 70%;
   margin-left: 200px;
   margin-top: 50px;
-
   .container {
     height: 100%;
     width: 85%;
     display: flex;
     justify-content: left;
     align: left;
-
     position: relative;
     bottom: 5rem;
   }
-
   .btn {
     border: 1px solid #616266;
     border-radius: 5px; 
     background-color: rgba(0,0,0,0);
     color: #616266;
     padding: 5px;
-    margin-right: 5px;
+    margin-left: 2px;
   }
-
   .cancle-btn {
     border: 1px solid #616266;
     border-radius: 5px; 
@@ -43,13 +39,11 @@ const Wrapper = styled.div`
     color: #549400;
     cursor: pointer;
   }
-
   .cancle-btn:hover {
     border: 1px solid #b00000;
     color: #b00000;
     cursor: pointer;
   }
-
 `;
 
 export const FieldWrapper = styled.div`
@@ -75,14 +69,12 @@ export const FieldWrapper = styled.div`
 export const SwitchWrapper = styled.div`
   display: flex;
   align-items: center;
-
   .field-container {
     .ant-form-item {
       margin-bottom: 0;
       margin-right: 10px;
     }
   }
-
   .ant-switch {
     min-width: 36px;
     height: 21px;
@@ -209,7 +201,6 @@ export const BannerWrapper = styled.div`
 
 export const DescriptionWrapper = styled.div`
   padding: 0 0 29px;
-
   button {
     font-size: 15px;
     font-weight: 700;
@@ -220,12 +211,10 @@ export const DescriptionWrapper = styled.div`
     box-shadow: none;
     text-shadow: none;
     color: ${themeGet('primary.0', '#616266')};
-
     &:hover,
     &:focus {
       color: ${themeGet('primary.1', '#399C9F')};
     }
-
     &::after {
       content: none;
     }
@@ -239,7 +228,6 @@ export const Input = styled.input`
   border: 1px solid #7d7d7d;
   border-radius: 3px;
   outline: 0px;
-
   &:hover {
     border: 1px solid #386111;
   }
@@ -258,7 +246,6 @@ export const Button = styled.button`
   font-size: 16px;
   height: 50px;
   line-height: 10px;
-
   &:hover {
     color: #386111;
     border: 1px solid #386111;
@@ -270,7 +257,6 @@ export const A = styled.a`
   color: #7d7d7d;
   font-weight: 700;
   text-decoration: underline;
-
   &:hover {
     color: #386111;
     text-decoration: underline;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
 const HallWrapper = styled.div`
-  padding: 50px 0px 50px 0px;
+  padding: 30px 0px 50px 0px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -113,6 +113,11 @@ export const HallSum = styled.div`
 `;
 
 export const HallBtn = styled.div`
+`;
+
+export const ButtonBox = styled.div`
+  margin-left: 0px;
+  margin-top: 30px;
 `;
 
 export default HallWrapper;

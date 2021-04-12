@@ -1,13 +1,15 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react' 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Wrapper, { TextInfo, Label, Title, Input } from 'container/user/MyPage/AccountDetails/UpdateUser.style';
 import { DragAndDropUploader, FormControl } from 'components/index';
 import { Row, Col, Divider } from 'antd';
+import { MyResponsivePie } from 'container/index'
 import { FormHeader, FormContent, FormAction } from 'container/exhibition/AddExhibition.style';
 
 
 const UpdateUser = (props) => {
+    const history = useHistory();
     const [ user, setUser ] = useState({})
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -15,37 +17,47 @@ const UpdateUser = (props) => {
     const [phoneNumber, setPhoneNumber] = useState('')
     const [preferGenre, setPreferGenre] = useState('')
     const editUser = () => {
-        setUser(JSON.parse(localStorage.getItem("user")))
+        setUser(JSON.parse(localStorage.getItem("cartuser")))
     } 
     const URL = `http://localhost:8080/users/`
     const userEdit = e => {
         e.preventDefault()
+        const del = window.confirm("정보를 수정하시겠습니까?")
+        if(del){
         axios({
             url: URL+user.userNum,
             method: 'put',
             headers: {'Content-Type':'application/json','Authorization': 'Bearer '+localStorage.getItem("token")},
             data: {userNum: user.userNum, username, password, name: user.name, email, gender:user.gender, birthday:user.birthday, phoneNumber, admin:user.admin, preferGenre}
         }).then(res => {
-            props.history.push('/profile')
+            alert(`수정되었습니다.`)
+            history.push('/profile/update-user')
+            window.location.reload()
         }).catch(err => {
             alert(err)
-        })
+        })}
     }
     const userDelete = e => {
         e.preventDefault()
+        const del = window.confirm("정말 탈퇴하시겠습니까?")
+        if(del){
         axios({
             url: URL+user.userNum,
             method: 'delete',
             headers: {'Content-Type':'application/json','Authorization': 'Bearer '+localStorage.getItem("token")}
         }).then(res => {
-            props.history.push('/')
+            alert(`탈퇴되었습니다.`)
+            localStorage.removeItem("cartuser")
+            localStorage.removeItem("token")
+            history.push('/')
         }).catch(err => {
             alert(err)
-        })
+        })}
     }
     useEffect(()=>editUser(), [])
     return (
         <Wrapper>
+        <Divider />
           <FormContent>
           <FormHeader>
           <Title>회원정보 수정</Title>
@@ -84,8 +96,8 @@ const UpdateUser = (props) => {
               <FormControl
                 label="이메일"
               >
-              <Input name="email" value={email}
-                     placeholder = { user.email }
+              <Input name="email" defaultValue={user.email}
+                     placeholder={user.email}
                      onChange={e => setEmail(e.target.value)} required/>
               </FormControl>
             </Col>
@@ -113,8 +125,8 @@ const UpdateUser = (props) => {
               <FormControl
                 label="전화번호"
               >
-              <Input name="phoneNumber" value={phoneNumber}
-                     placeholder = { user.phoneNumber }
+              <Input name="phoneNumber" defaultValue={user.phoneNumber}
+                     placeholder={user.phoneNumber}
                      onChange={e => setPhoneNumber(e.target.value)} required/>
               </FormControl>
             </Col>
@@ -124,9 +136,15 @@ const UpdateUser = (props) => {
               <FormControl
                 label="선호장르"
               >
-              <Input name="preferGenre" value={preferGenre}
-                     placeholder = { user.preferGenre }
-                     onChange={e => setPreferGenre(e.target.value)} required/>
+          <select name="preferGenre" value={preferGenre} 
+                  onChange={ e => setPreferGenre(e.target.value) }>
+            <option value="selection">선택</option>
+            <option value="painting">회화</option>
+            <option value="media">미디어</option>
+            <option value="sculpture">조각</option>
+            <option value="craft">공예</option>
+            <option value="installation">설치</option>
+          </select>
               </FormControl>
             </Col>
           </Row>

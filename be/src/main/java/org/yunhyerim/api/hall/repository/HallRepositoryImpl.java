@@ -19,5 +19,4 @@ public class HallRepositoryImpl extends QuerydslRepositorySupport implements Hal
 		//this.qf = qf;
 		this.em = em;
 	}
-
 }

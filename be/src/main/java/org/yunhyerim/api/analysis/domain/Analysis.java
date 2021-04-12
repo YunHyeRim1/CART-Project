@@ -3,27 +3,20 @@ package org.yunhyerim.api.analysis.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.yunhyerim.api.exhibition.domain.Exhbn;
+import lombok.NoArgsConstructor;
 import org.yunhyerim.api.recommend.domain.Recommend;
 import org.yunhyerim.api.user.domain.UserVO;
 
 import lombok.Getter;
-import org.yunhyerim.api.user.domain.UserVO;
 
-@Entity @Getter @Table(name = "analyses")
+@NoArgsConstructor
+@Entity @Getter @Table(name = "analyses") @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Analysis {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "anal_num") private long analNum;
@@ -39,7 +32,7 @@ public class Analysis {
 	private Exhbn exhbn;
 
 	@JsonManagedReference @JsonIgnore
-	@OneToMany(mappedBy = "analysis")
+	@OneToMany(mappedBy = "analysis",cascade = CascadeType.ALL)
 	private List<Recommend> recommendList = new ArrayList<>();
 
 	public void setAnalNum(long analNum) {

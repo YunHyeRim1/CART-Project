@@ -11,19 +11,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Getter;
-import org.yunhyerim.api.exhibition.domain.Exhbn;
+import lombok.*;
 import org.yunhyerim.api.user.domain.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.yunhyerim.api.user.domain.UserVO;
-
 import java.util.Date;
 
-@Entity @Getter
+@Entity @Getter @NoArgsConstructor
 @Table(name = "bookings") @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY) 
@@ -82,4 +76,19 @@ public class Booking {
 				", bookPnumber='" + bookPnumber + '\'' +
 				'}';
 	}
+
+	@Builder
+	public Booking(long bookNum, String bookName, String bookEmail, String bookPnumber,
+				   String bookTickets, String totalPrice, Date bookDate, UserVO user, Exhbn exhbn) {
+		this.bookNum = bookNum;
+		this.bookName = bookName;
+		this.bookEmail = bookEmail;
+		this.bookPnumber = bookPnumber;
+		this.bookTickets = bookTickets;
+		this.bookDate = bookDate;
+		this.totalPrice = totalPrice;
+		this.user = user;
+		this.exhbn = exhbn;
+	}
+
 }

@@ -1,12 +1,20 @@
 package org.yunhyerim.api.hall.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.yunhyerim.api.hall.domain.Hall;
+import org.yunhyerim.api.hall.domain.HallDTO;
 
 public interface HallService {
-	public Hall findByHallNum(long hallNum);
+	public long save(Hall hall);
+	public long delete(long id);
+	public long count();
+	public Hall getOne(long id);
+	public Optional<Hall> findById(long id);
+	public boolean existsById(long id);
+	public List<Hall> findAll();
 	public long update(String hallName, String hallLocation, String hallTime, String hallClosed,
 					   String hallPnumber, String hallInfo, String Image, long hallNum);
-	public String deleteById(long id);
+	public List<HallDTO> findAllHall();
 }

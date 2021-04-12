@@ -11,10 +11,13 @@ import {
   USER_PROFILE_PAGE,
   USER_ACCOUNT_SETTINGS_PAGE,
   BOOKING_PAGE,
-  BOOKING_LIST_PAGE,
+  REVIEW_DETAIL_PAGE,
   BOOKING_DETAIL_PAGE,
   EXHBN_DETAIL_PAGE,
-  EXHBN_LIST_PAGE,
+  EXHBN_ALL_LIST_PAGE,
+  EXHBN_RECOMMEND_LIST_PAGE,
+  EXHBN_SHOWING_LIST_PAGE,
+  EXHBN_FIN_LIST_PAGE,
   HALL_DETAIL_PAGE,
   HALL_LIST_PAGE,
   LISTING_SEARCH_POST_PAGE,
@@ -23,6 +26,11 @@ import {
   ADD_IMAGE_PAGE,
   ADD_HALL_PAGE,
   UPDATE_HALL_PAGE,
+  REVIEW_LIST_PAGE,
+  ANAL_PAGE,
+  ADMIN_PAGE,
+  LOGIN_HOME_PAGE,
+  RESET_PAGE
 } from 'settings/constant';
 
 /**
@@ -35,6 +43,16 @@ const Loading = () => null;
 const routes = [
   {
     path: HOME_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/common/Home'),
+      loading: Loading,
+      modules: ['Home'],
+    }),
+    exact: true,
+  },
+  {
+    path: LOGIN_HOME_PAGE,
     component: Loadable({
       loader: () =>
         import('container/common/Home'),
@@ -89,19 +107,37 @@ const routes = [
     }),
   },
   {
-    path: BOOKING_LIST_PAGE,
+    path: EXHBN_ALL_LIST_PAGE,
     component: Loadable({
       loader: () =>
-        import('container/booking/BookingList'),
+        import('container/exhibition/Listing/AllListing'),
       loading: Loading,
-      modules: ['BookingList'],
+      modules: ['ExhibitionList'],
     }),
   },
   {
-    path: EXHBN_LIST_PAGE,
+    path: EXHBN_SHOWING_LIST_PAGE,
     component: Loadable({
       loader: () =>
-        import('container/exhibition/Listing/ExhibitionListing'),
+        import('container/exhibition/Listing/ShowingListing'),
+      loading: Loading,
+      modules: ['ExhibitionList'],
+    }),
+  },
+  {
+    path: EXHBN_FIN_LIST_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/exhibition/Listing/FinListing'),
+      loading: Loading,
+      modules: ['ExhibitionList'],
+    }),
+  },
+  {
+    path: EXHBN_RECOMMEND_LIST_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/recommend/RecommendListing'),
       loading: Loading,
       modules: ['ExhibitionList'],
     }),
@@ -134,28 +170,28 @@ const routes = [
     }),
   },
   {
-    path: `${HALL_DETAIL_PAGE}/:hallNum`,
-    component: Loadable({
-      loader: () =>
-        import('./container/hall/HallDetail'),
-      loading: Loading,
-      modules: ['HallDetail'],
-    }),
-  },
-  {
     path: LISTING_SEARCH_POST_PAGE,
     component: Loadable({
       loader: () =>
-        import('./container/exhibition/Listing/SearchListing'),
+        import('container/exhibition/Listing/SearchListing'),
       loading: Loading,
       modules: ['SearchListing'],
+    }),
+  },
+  {
+    path: `${HALL_DETAIL_PAGE}/:hallNum`,
+    component: Loadable({
+      loader: () =>
+        import('container/hall/HallDetail'),
+      loading: Loading,
+      modules: ['HallDetail'],
     }),
   },
   {
     path: ADD_EXHBN_PAGE,
     component: Loadable({
       loader: () =>
-        import('./container/exhibition/AddExhibition'),
+        import('container/exhibition/AddExhibition'),
       loading: Loading,
       modules: ['AddExhibition'],
     }),
@@ -164,16 +200,16 @@ const routes = [
     path: `${UPDATE_EXHBN_PAGE}/:exhbnNum`,
     component: Loadable({
       loader: () =>
-        import('./container/exhibition/UpdateExhibition'),
+        import('container/exhibition/UpdateExhibition'),
       loading: Loading,
-      modules: ['UpdateExhibition'],
+      modules: ['UpdateExhbn'],
     }),
   },
   {
     path: ADD_HALL_PAGE,
     component: Loadable({
       loader: () =>
-        import('./container/hall/AddHall'),
+        import('container/hall/AddHall'),
       loading: Loading,
       modules: ['AddHall'],
     }),
@@ -182,27 +218,66 @@ const routes = [
     path: `${UPDATE_HALL_PAGE}/:hallNum`,
     component: Loadable({
       loader: () =>
-        import('./container/hall/UpdateHall'),
+        import('container/hall/UpdateHall'),
       loading: Loading,
       modules: ['UpdateHall'],
     }),
   },
+  {
+    path: ADD_IMAGE_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/exhibition/ExhibitionPhotos'),
+      loading: Loading,
+      modules: ['ExhibitionPhotos'],
+    }),
+  },
+  {
+    path: REVIEW_LIST_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/review/ReviewList'),
+      loading: Loading,
+      modules: ['ReviewList'],
+    }),
+  },
+  {
+    path: `${REVIEW_DETAIL_PAGE}/:reviewNum`,
+    component: Loadable({
+      loader: () =>
+        import('container/review/ReviewDetail'),
+      loading: Loading,
+      modules: ['ReviewDetail'],
+    }),
+  },
+  {
+    path: ANAL_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/analysis/Analysis'),
+      loading: Loading,
+      modules: ['Analysis'],
+    }),
+  },
+  {
+    path: ADMIN_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/user/MyPage/Dashboard'),
+      loading: Loading,
+      modules: ['Dashboard'],
+    }),
+  },
+  {
+    path: RESET_PAGE,
+    component: Loadable({
+      loader: () =>
+        import('container/Reset'),
+      loading: Loading,
+      modules: ['Dashboard'],
+    }),
+  },
 ];
-
-/**
- *
- * Protected Route Component
- *
- */
-
-const AccountSettingsPage = Loadable({
-  loader: () =>
-    import('./container/user/MyPage/AccountSettings/AccountSettingsPage'),
-  loading: Loading,
-  modules: ['AccountSettingsPage'],
-});
-
-
 
 /**
  *
@@ -212,7 +287,7 @@ const AccountSettingsPage = Loadable({
 
 const NotFound = Loadable({
   loader: () =>
-    import('./container/common/404/Error404'),
+    import('container/common/404/Error404'),
   loading: Loading,
   modules: ['NotFound'],
 });

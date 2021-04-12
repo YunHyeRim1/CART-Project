@@ -86,7 +86,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .hotel-submission-form {
+  .exhibition-submission-form {
     .ant-progress-outer {
       position: fixed;
       z-index: 9;
@@ -102,7 +102,7 @@ const GlobalStyle = createGlobalStyle`
         white-space: nowrap;
       }
     }
-    .hotel-form-location {
+    .exhibition-form-location {
       .ant-card-head-title {
         font-size: 15px;
         line-height: 18px;
@@ -271,9 +271,7 @@ const GlobalStyle = createGlobalStyle`
         border: 0;
         border-radius: 4px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        position: relative;
-        left: 6rem;
-
+    
         .ant-menu-item {
           margin: 0;
           padding: 0;
@@ -662,7 +660,7 @@ const GlobalStyle = createGlobalStyle`
   .reservation_modal {
     .ant-modal {
       width: 100% !important;
-      max-width: 450px;
+      max-width: 1000px;
       padding: 0 15px;
     }
     .ant-modal-content {
@@ -675,6 +673,7 @@ const GlobalStyle = createGlobalStyle`
           header {
             padding-top: 50px;
             padding-bottom: 20px;
+            padding-right: 20px;
             border-color: ${themeGet('border.0', '#EBEBEB')};
             @media   (max-width: 375px) {
               padding-top: 30px;

@@ -2,6 +2,7 @@ package org.yunhyerim.api.user.domain;
 
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,7 @@ import lombok.Getter;
 
 import java.util.List;
 
-@Component @Lazy @Getter
+@Component @Lazy @Data
 public class UserDTO{
 	private long userNum;
 	@ApiModelProperty(position = 0)
@@ -25,5 +26,7 @@ public class UserDTO{
 	private String birthday;
 	private String phoneNumber;
 	private String preferGenre;
+	private String admin;
+	private String userImage;
 
 }

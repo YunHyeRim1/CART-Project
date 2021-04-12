@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col, Input, Button } from 'antd';
+import { FileInput } from 'container/index'
 import { FormControl } from 'components/index';
 import { FormHeader, Title, FormContent, FormAction } from 'container/exhibition/AddExhibition.style';
 import axios from 'axios'
+import { HALL_DETAIL_PAGE } from 'settings/constant'
+import { useHistory } from 'react-router'
 
 const UpdateHall = ({ match }) => {
+  const history = useHistory()
   const [ hallDetail, setHallDetail] = useState({})
   const [ updateHallData, setUpdateHallData ] = useState({
     hallName: "", hallLocation: "", hallTime: "", hallClosed: "", 
@@ -12,19 +16,25 @@ const UpdateHall = ({ match }) => {
   })
   const { hallName, hallLocation, hallTime, hallClosed,
     hallPnumber, hallInfo, hallImage } = updateHallData
-  
+  const [file, setFile] = useState({ 
+    fileName: null, 
+    fileURL: null 
+  });
+
+  const onFileChange = (file) => {
+    setFile({
+      fileName: file.name,
+      fileURL: file.url,
+    });
+  }
   const onChange = useCallback(e => {
     setUpdateHallData({...updateHallData, [e.target.name]: e.target.value})
   })
 
-  const [ hallNum, setHallNum ] = useState('')
-
   useEffect(e => {
-    axios.get("http://localhost:8080/halls/find/"+match.params.hallNum,
-            { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
+    axios.get("http://localhost:8080/halls/find/"+match.params.hallNum)
     .then((resp) => {
       setHallDetail(resp.data)
-      setHallNum(resp.data)
     })
     .catch((err) => {
       alert(`실패`)
@@ -46,7 +56,7 @@ const UpdateHall = ({ match }) => {
     })
     .then(resp => {
       alert(`수정 완료`)
-      window.location.reload()
+      history.push(`${HALL_DETAIL_PAGE}/${match.params.hallNum}`)
     })
     .catch(err => {
       alert(`수정 실패`)
@@ -66,8 +76,7 @@ const UpdateHall = ({ match }) => {
               label="전시관 이미지"
               htmlFor="hallImage"
             >
-            <input type="file" id="hallImage" name="hallImage" value={hallImage}
-                   accept="image/*"  onChange = { onChange }/>     
+            <FileInput onFileChange={onFileChange} name={file.fileName}/>
             </FormControl>
           </Col>
         </Row>

@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QReview extends EntityPathBase<Review> {
 
-    private static final long serialVersionUID = 974072996L;
+    private static final long serialVersionUID = 1438180606L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -32,7 +32,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public final StringPath reviewTitle = createString("reviewTitle");
 
-    public final StringPath score = createString("score");
+    public final NumberPath<Integer> score = createNumber("score", Integer.class);
 
     public final org.yunhyerim.api.user.domain.QUserVO user;
 

@@ -16,9 +16,11 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QUserVO extends EntityPathBase<UserVO> {
 
-    private static final long serialVersionUID = -1558418877L;
+    private static final long serialVersionUID = 1655468317L;
 
     public static final QUserVO userVO = new QUserVO("userVO");
+
+    public final StringPath admin = createString("admin");
 
     public final ListPath<org.yunhyerim.api.analysis.domain.Analysis, org.yunhyerim.api.analysis.domain.QAnalysis> analysisList = this.<org.yunhyerim.api.analysis.domain.Analysis, org.yunhyerim.api.analysis.domain.QAnalysis>createList("analysisList", org.yunhyerim.api.analysis.domain.Analysis.class, org.yunhyerim.api.analysis.domain.QAnalysis.class, PathInits.DIRECT2);
 
@@ -42,9 +44,13 @@ public class QUserVO extends EntityPathBase<UserVO> {
 
     public final ListPath<Role, EnumPath<Role>> roles = this.<Role, EnumPath<Role>>createList("roles", Role.class, EnumPath.class, PathInits.DIRECT2);
 
+    public final StringPath userImage = createString("userImage");
+
     public final StringPath username = createString("username");
 
     public final NumberPath<Long> userNum = createNumber("userNum", Long.class);
+
+    public final ListPath<org.yunhyerim.api.wishilist.domain.Wishlist, org.yunhyerim.api.wishilist.domain.QWishlist> wishLists = this.<org.yunhyerim.api.wishilist.domain.Wishlist, org.yunhyerim.api.wishilist.domain.QWishlist>createList("wishLists", org.yunhyerim.api.wishilist.domain.Wishlist.class, org.yunhyerim.api.wishilist.domain.QWishlist.class, PathInits.DIRECT2);
 
     public QUserVO(String variable) {
         super(UserVO.class, forVariable(variable));

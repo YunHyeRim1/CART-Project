@@ -3,10 +3,6 @@ import { themeGet } from '@styled-system/theme-get';
 const DescriptionWrapper = styled.div`
   padding: 0 0 29px;
 
-  .sp {
-    white-space: "pre-wrap";
-  }
-
   button {
     font-size: 15px;
     font-weight: 700;

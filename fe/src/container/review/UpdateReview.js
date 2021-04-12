@@ -1,13 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Row, Col, Button, Input, Rate, Checkbox, Divider, Modal } from 'antd';
-import FormControl from 'components/UI/FormControl/FormControl';
+import { FormControl } from 'components/index';
 import ReviewWrapper, {
   ModalTitle, Form
 } from 'container/review/Review.style';
 import axios from 'axios';
 
-const Review = (props) => {
+const UpdateReview = (props) => {
   const [ score, setScore ] = useState(0)
   const [ reviewContent, setReviewContent ] = useState('')
   const { control, errors, handleSubmit } = useForm({
@@ -47,8 +47,7 @@ const Review = (props) => {
         window.location.reload()
       })
       .catch(err => {
-        alert(`수정 실패`)
-        throw err;
+        alert(`수정실패: `+err)
       })
     }
   };
@@ -80,7 +79,10 @@ const Review = (props) => {
     setScore(value)
   }
 
-  return (
+  return (<>
+    { localStorage.getItem("cartuser") == null ||
+     (JSON.parse(localStorage.getItem("cartuser")).username != props.singleReview.username ||
+     JSON.parse(localStorage.getItem("cartuser")).admin == null)  ? <></> :
     <>
     <button className="btn" onClick={() => handleModalOpen('review')}>수정</button>
     <Modal
@@ -117,9 +119,8 @@ const Review = (props) => {
           rows={5} onChange = {e => {setReviewContent(`${e.target.value}`)}}
           id="reviewContent"
           name="reviewContent"
-          defaultValue=""
           control={control}
-          placeholder={props.singleReview.reviewContent}
+          defaultValue={props.singleReview.reviewContent}
           rules={{
             required: true,
           }}
@@ -134,7 +135,8 @@ const Review = (props) => {
     </Form></Modal>
     <button className="cancle-btn" onClick={handleDeleteReview}>삭제</button>
     </>
+    }</>
   )
 };
 
-export default Review;
+export default UpdateReview;

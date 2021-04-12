@@ -4,7 +4,7 @@ import { Menu } from 'antd';
 import { AuthContext } from 'context/index';
 import {
   HOME_PAGE,
-  EXHBN_LIST_PAGE,
+  EXHBN_ALL_LIST_PAGE,
   HALL_DETAIL_PAGE,
   USER_ACCOUNT_SETTINGS_PAGE,
   USER_PROFILE_PAGE,
@@ -22,7 +22,7 @@ const MobileMenu = ({ className }) => {
         </NavLink>
       </Menu.Item>
       <Menu.Item key="1">
-        <NavLink to={`${EXHBN_LIST_PAGE}`}>Exhibition</NavLink>
+        <NavLink to={`${EXHBN_ALL_LIST_PAGE}`}>Exhibition</NavLink>
       </Menu.Item>
       <Menu.Item key="2">
         <NavLink to={`${HALL_DETAIL_PAGE}/1`}>Hall</NavLink>
@@ -30,16 +30,6 @@ const MobileMenu = ({ className }) => {
       <Menu.Item key="3">
         <NavLink to={`${USER_PROFILE_PAGE}`}>MyPage</NavLink>
       </Menu.Item>
-      {loggedIn && (
-        <Menu.Item key="4">
-          <NavLink to={USER_ACCOUNT_SETTINGS_PAGE}>Account Settings</NavLink>
-        </Menu.Item>
-      )}
-      {loggedIn && (
-        <Menu.Item key="5">
-          <button onClick={e => logOut()}>Log Out</button>
-        </Menu.Item>
-      )}
     </Menu>
   );
 };

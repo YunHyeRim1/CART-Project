@@ -1,8 +1,6 @@
 package org.yunhyerim.api.hall.repository;
 
-import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.hall.domain.Hall;
-import org.yunhyerim.api.hall.domain.HallDto;
 
 import java.util.List;
 
@@ -27,6 +25,4 @@ public interface HallRepository extends JpaRepository<Hall, Long>, HallCustomRep
 					   @Param("hallInfo") String hallInfo,
 					   @Param("hallImage") String hallImage,
 					   @Param("hallNum") long hallNum);
-	@Query(value="select * from halls h where h.hall_num like :hallNum", nativeQuery = true)
-	public Hall findByHallNum(@Param("hallNum") long hallNum);
 }

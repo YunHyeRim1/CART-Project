@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiExternalLink } from 'react-icons/fi';
 import TextLink from 'components/UI/TextLink/TextLink';
 import Rating from 'components/UI/Rating/Rating';
@@ -8,6 +8,7 @@ import 'react-multi-carousel/lib/styles.css';
 import GridCard from 'components/GridCard/GridCard';
 import Moment from 'moment';
 import 'moment/locale/ko'
+import axios from 'axios';
 
 const responsive = {
   desktop: {
@@ -36,33 +37,62 @@ const responsive = {
   },
 };
 
-const PostGrid = ({
-  exhbnTitle,
-  rating,
-  exhbnPrice,
-  ratingCount,
-  exhbnImage,
-  link,
-  exhbnNum,
-  hallLocation,
-  startDate,
-  endDate
-}) => {
+const PostGrid = ({exhbnNum, exhbnTitle, exhbnImage, hallName, startDate, endDate, totalScore}) => {
+  const [ isWishAdd, setIsWishAdd ] = useState(false)
+  const [ usernum, setUsernum ] = useState(0)
+  const URL = 'http://localhost:8080/wishlist'
+
+  const wishAddHandler = () => {
+    setIsWishAdd(!isWishAdd)
+  }
+  const wishHandler = e => {
+    if(localStorage.getItem("loginuser")){
+      setUsernum(JSON.parse(localStorage.getItem("loginuser").userNum))
+    } else{
+      setUsernum(23)
+    }
+    if (!isWishAdd) {
+      axios({
+        url: URL,
+        method: 'post',
+        headers: {'Content-Type': 'application/json', 'Authorization' : 'Bearer '+localStorage.getItem("token")},
+        data: { userNum: usernum, exhbnNum }
+      })
+      .then(resp => {
+        alert(`위시리스트에 추가되었습니다!`)
+        setIsWishAdd(true)
+      })
+      .catch(err => {
+        alert(`위시리스트 추가: `+err)
+        throw err;
+      })
+    } else if (isWishAdd) {
+      axios({
+        url: URL+"/"+usernum+"/"+exhbnNum,
+        method: 'delete',
+        headers: {'Content-Type': 'application/json', 'Authorization' : 'Bearer '+localStorage.getItem("token")},
+      })
+      .then(resp => {
+        alert(`위시리스트에서 삭제되었습니다.`)
+      })
+      .catch(err => {
+        alert(`위시리스트 삭제: `+err)
+        throw err;
+      })
+    }
+  }
+
   return (
     <GridCard
       isCarousel={true}
-      favorite={
-        <Favourite
-          onClick={event => {
-            console.log(event);
-          }}
-        />
-      }
+      favorite={ <Favourite
+        onClick={ wishHandler }
+        exhbnNum = {exhbnNum}/> }
       title={<TextLink link={`exhbns/${exhbnNum}`} content={exhbnTitle}/>}
-      location={`${hallLocation}`}
+      location={`${hallName}`}
       date={`${Moment(startDate).lang("ko").format('YYYY-MM-DD (ddd)')} 
               ~ ${Moment(endDate).lang("ko").format('YYYY-MM-DD (ddd)')}`}
-      rating={<Rating rating={rating} ratingCount={ratingCount} type="bulk" />}
+      rating={<Rating rating={totalScore} ratingCount={totalScore} type="bulk" />}
     >
       <Carousel
         additionalTransfrom={0}
@@ -76,7 +106,7 @@ const PostGrid = ({
         itemClass=""
         renderDotsOutside={false}
         responsive={responsive}
-        showDots={true}
+        showDots={false}
         sliderClass=""
         slidesToSlide={1}
       >
@@ -92,7 +122,6 @@ const PostGrid = ({
               position: 'relative',
             }}
           />
-
       </Carousel>
     </GridCard>
   );

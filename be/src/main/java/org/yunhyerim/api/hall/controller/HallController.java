@@ -3,34 +3,67 @@ package org.yunhyerim.api.hall.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.web.bind.annotation.*;
-import org.yunhyerim.api.analysis.service.AnalysisServiceImpl;
-import org.yunhyerim.api.common.controller.AbstractController;
 import org.yunhyerim.api.hall.domain.Hall;
+import org.yunhyerim.api.hall.domain.HallDTO;
+import org.yunhyerim.api.common.service.FilesStorageService;
 import org.yunhyerim.api.hall.service.HallServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@RestController 
-@RequiredArgsConstructor 
+@RestController
+@RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/halls")
-public class HallController extends AbstractController<Hall> {
+public class HallController{
 	final HallServiceImpl service;
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	final FilesStorageService storageService;;
 
 	@PostMapping("")
-	public ResponseEntity<Long> save(@RequestBody Hall t) {
-		return ResponseEntity.ok(service.save(t));
+	public ResponseEntity<Long> save(@RequestBody Hall h) {
+		return ResponseEntity.ok(service.save(h));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Long> delete(@PathVariable long id) {
+		return ResponseEntity.ok(service.delete(id));
+	}
+
+	@GetMapping("/count")
+	public ResponseEntity<Long> count() {
+		return ResponseEntity.ok(service.count());
+	}
+
+	@GetMapping("/one/{id}")
+	public ResponseEntity<Hall> getOne(@PathVariable long id) {
+		return ResponseEntity.ok(service.getOne(id));
+	}
+
+	@GetMapping("/find/{id}")
+	public ResponseEntity<Optional<Hall>> findById(@PathVariable long id) {
+		return ResponseEntity.ok(service.findById(id));
+	}
+
+	@GetMapping("/exists/{id}")
+	public ResponseEntity<Boolean> existsById(@PathVariable long id) {
+		return ResponseEntity.ok(service.existsById(id));
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity<List<Hall>> findAll() {
+		return ResponseEntity.ok(service.findAll());
+	}
+
+	@GetMapping("")
+	public ResponseEntity<List<HallDTO>> findAllHall() {
+		return ResponseEntity.ok(service.findAllHall());
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Long> update(@RequestBody Hall t, @PathVariable long id) {
-		logger.info("수정 정보: "+t.toString());
-		Hall h = service.findByHallNum(id);
+		Hall h = service.getOne(id);
 		if(!(t.getHallName().equals(h.getHallName()) || t.getHallName().equals(""))) {
 			h.setHallName(t.getHallName());
 		}
@@ -55,39 +88,4 @@ public class HallController extends AbstractController<Hall> {
 		return ResponseEntity.ok(service.save(h));
 	}
 
-	@DeleteMapping("")
-	public ResponseEntity<Long> delete(@RequestBody Hall t) {
-		return ResponseEntity.ok(service.delete(t));
-	}
-
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteById(@PathVariable long id){
-		return ResponseEntity.ok(service.deleteById(id));
-	}
-
-	@GetMapping("/count")
-	public ResponseEntity<Long> count() {
-		return ResponseEntity.ok(service.count());
-	}
-
-	@GetMapping("/one/{id}")
-	public ResponseEntity<Hall> getOne(@PathVariable long id) {
-		return ResponseEntity.ok(service.getOne(id));
-	}
-
-	@GetMapping("/find/{id}")
-	public ResponseEntity<Optional<Hall>> findById(@PathVariable long id) {
-		return ResponseEntity.ok(service.findById(id));
-	}
-
-	@GetMapping("/exists/{id}")
-	public ResponseEntity<Boolean> existsById(@PathVariable long id) {
-		return ResponseEntity.ok(service.existsById(id));
-	}
-
-	@GetMapping("")
-	public ResponseEntity<List<Hall>> findAll() {
-		return ResponseEntity.ok(service.findAll());
-	}
-	
 }

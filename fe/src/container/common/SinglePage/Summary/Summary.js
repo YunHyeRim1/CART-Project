@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SummaryWrapper, { PosterImage, Info, ButtonGroup, PosterBox, InfoBox, ButtonBox } from 'container/common/SinglePage/Summary/Summary.style';
-import { Heading, Rating, Favorite, FaceBookShare, TwitterShare } from 'components/index';
-import { RatingMeta } from 'container/exhibition/ExhibitionDetail.style';
+import { Heading, Rating, Favorite, FaceBookShare, TwitterShare, InstagramShare } from 'components/index';
+import { RatingMeta } from 'container/common/SinglePage/Summary/Summary.style';
 import { Button, Menu, Dropdown } from 'antd';
 import Moment from 'moment';
 import 'moment/locale/ko'
@@ -17,6 +17,9 @@ const SocialShareMenu = ( props) => {
         <Menu.Item>
           <FaceBookShare {...props} />
         </Menu.Item>
+        <Menu.Item>
+          <InstagramShare {...props} />
+        </Menu.Item>
       </Menu>
     );
   };
@@ -30,7 +33,7 @@ const {
   titleStyle,
   media,
   location,
-  startDate, endDate, genre, price, artist}
+  start, end, genre, price, artist}
 = props;
 
 return (
@@ -62,13 +65,13 @@ return (
             <Info>
                 <Heading as="h2" content={title} {...titleStyle} />
                 <RatingMeta>
-                    <Rating rating={rating} ratingCount={ratingCount} type="bulk" />
+                    <Rating rating={rating} ratingCount={ratingCount}/>
                 </RatingMeta>
                 <ul>
                     <li><strong>장소</strong> <span>{location}</span></li>
                     <li><strong>기간</strong> <span>
-                    {Moment({startDate}).lang("ko").format('YYYY-MM-DD (ddd)')} 
-                    ~ {Moment({endDate}).lang("ko").format('YYYY-MM-DD (ddd)')}
+                    {Moment(start).lang("ko").format('YYYY-MM-DD (ddd)')} 
+                    ~ {Moment(end).lang("ko").format('YYYY-MM-DD (ddd)')}
                       </span></li>
                     <li><strong>가격</strong> <span>
                       {price === '무료' || price === '' ? '무료' :

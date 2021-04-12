@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { Divider, Col} from 'antd';
-import Wrapper, { TextInfo, Label, Title, Input } from 'container/booking/Booking.style';
-import { BOOKING_LIST_PAGE } from 'settings/constant'
+import Wrapper, { TextInfo, Label, Title, Input, TextLink } from 'container/booking/Booking.style';
+import { EXHBN_DETAIL_PAGE, USER_PROFILE_PAGE } from 'settings/constant'
 import Moment from 'moment';
 import 'moment/locale/ko';
 
@@ -22,7 +22,7 @@ const BookingDetail = ({match}) => {
   const history = useHistory();
   const URL = 'http://localhost:8080/bookings/'
 
-  useEffect(e => {
+  useEffect(() => {
     axios.get(URL+match.params.bookNum, 
               { headers: { 'Authorization' : 'Bearer '+localStorage.getItem("token")}})
     .then((resp) => {
@@ -74,7 +74,7 @@ const BookingDetail = ({match}) => {
         })
         .then(resp => {
           alert(`예매 취소 완료`)
-          history.push(BOOKING_LIST_PAGE)
+          history.push(USER_PROFILE_PAGE)
         })
         .catch(err => {
           alert(`예매 취소가 실패하였습니다.`)
@@ -91,7 +91,8 @@ const BookingDetail = ({match}) => {
         <Label>No.</Label>
         <TextInfo> {bookingDetail.bookNum} </TextInfo>
         <Label>전시명</Label>
-        <TextInfo> {bookingDetail.exhbnNum} </TextInfo>
+        <Link to={`${EXHBN_DETAIL_PAGE}/${bookingDetail.exhbnNum}`}>
+        <TextLink className="link"> {bookingDetail.exhbnTitle} </TextLink></Link>
         <Label>예약일</Label>
         <TextInfo> {Moment(bookingDetail.bookDate).lang('ko').format('YYYY-MM-DD (ddd)')} </TextInfo>
         <Label>결제금액</Label>
@@ -103,24 +104,24 @@ const BookingDetail = ({match}) => {
         <div>
         <Title>예매자 정보</Title><br/>
         <Label>예매자명</Label>
-        <Input className="inputbox" name="bookName" value={bookName}
-          placeholder = { bookingDetail.bookName }
+        <Input className="inputbox" name="bookName"
+          defaultValue = { bookingDetail.bookName }
           onChange = { onChange }
           /><br/>
         <Label>이메일</Label>
-        <Input name="bookEmail" value={bookEmail}
-          placeholder = { bookingDetail.bookEmail }
+        <Input name="bookEmail"
+          defaultValue = { bookingDetail.bookEmail }
           onChange = { onChange }
           required /><br/>
         <Label>전화번호</Label>
-        <Input name="bookPnumber" value={bookPnumber}
-          placeholder = { bookingDetail.bookPnumber }
+        <Input name="bookPnumber"
+          defaultValue = { bookingDetail.bookPnumber }
           onChange = { onChange }
           required />
         </div>
         </Col>
         <div className="container">
-        <Link to={BOOKING_LIST_PAGE}><button className="btn">목록</button></Link>
+        <Link to={USER_PROFILE_PAGE}><button className="btn">목록</button></Link>
         <button className="btn" onClick = { handleEditBooking }>수정</button>
         <button className="cancle-btn" onClick = { handleDeleteBooking }>예매취소</button>
         </div>

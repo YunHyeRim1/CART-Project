@@ -8,7 +8,6 @@ const HallPageWrapper = styled.div`
   @media (max-width: 480px) {
     margin-bottom: 30px;
   }
-
   .btn {
     border: 1px solid #616266;
     border-radius: 5px; 
@@ -17,7 +16,6 @@ const HallPageWrapper = styled.div`
     padding: 5px;
     margin-right: 5px;
   }
-
   .cancle-btn {
     border: 1px solid #616266;
     border-radius: 5px; 
@@ -31,7 +29,6 @@ const HallPageWrapper = styled.div`
     color: #549400;
     cursor: pointer;
   }
-
   .cancle-btn:hover {
     border: 1px solid #b00000;
     color: #b00000;

@@ -6,13 +6,11 @@ const Stepper = styled.div`
   min-height: 100vh;
   flex-direction: column;
   padding-top: 15px;
-
   h3 {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
   }
-
   .stepper-progress {
     position: fixed;
     z-index: 1;
@@ -25,7 +23,6 @@ const Stepper = styled.div`
       .ant-progress-inner {
         border-radius: 0;
         background-color: ${themeGet('border.3', '#E6E6E6')};
-
         .ant-progress-bg {
           height: 10px !important;
           border-top-left-radius: 0 !important;
@@ -99,7 +96,6 @@ export const FormContent = styled.div`
       margin-bottom: 8px;
     }
   }
-
   /* uploader style */
   .drag_and_drop_uploader {
     .ant-upload {
@@ -128,7 +124,6 @@ export const FormContent = styled.div`
         }
       }
     }
-
     /* uploaded image style */
     .ant-upload-list {
       padding-top: 15px;
@@ -164,7 +159,6 @@ export const FormContent = styled.div`
       }
     }
   }
-
   /* fix google map input style */
   .gm-style > input[type='text'] {
     left: 9px !important;
@@ -173,7 +167,6 @@ export const FormContent = styled.div`
     overflow: hidden;
     white-space: nowrap;
   }
-
   /* radio group style */
   .ant-radio-group {
     display: flex;

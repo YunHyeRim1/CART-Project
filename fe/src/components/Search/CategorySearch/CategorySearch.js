@@ -11,7 +11,7 @@ import {
   getPropertyType,
 } from 'components/Search/SearchParams';
 import CategroySearchWrapper, {
-  RoomGuestWrapper,
+  TicketsWrapper,
   ItemWrapper,
   ActionWrapper,
 } from 'components/Search/CategorySearch/CategorySearch.style';
@@ -54,7 +54,7 @@ const CategotySearch = ({ history, location }) => {
     });
   };
 
-  const handleRoomGuestApply = () => {
+  const handleTicketsApply = () => {
     const query = {
       ...state,
       room: countRoom,
@@ -67,7 +67,7 @@ const CategotySearch = ({ history, location }) => {
     });
   };
 
-  const handleRoomGuestCancel = () => {
+  const handleTicketsCancel = () => {
     setRoom(0);
     setGuest(0);
     const query = {
@@ -85,7 +85,7 @@ const CategotySearch = ({ history, location }) => {
   const onSearchReset = () => {
     const search = setStateToUrl({ reset: '' });
     history.push({
-      pathname: '/listing',
+      pathname: '/all-exhbn',
       search: search,
     });
   };
@@ -144,7 +144,7 @@ const CategotySearch = ({ history, location }) => {
 
       <ViewWithPopup
         className={
-          Object.keys('showing').length !== null &&
+          Object.keys('fin').length !== null &&
           showing.setStartDate !== null
             ? 'activated'
             : ''
@@ -157,7 +157,7 @@ const CategotySearch = ({ history, location }) => {
       <div className="view_with__popup">
         <div className="popup_handler">
           <Button type="default" onClick={ onSearchReset }>
-            Reset
+            선택취소
           </Button>
         </div>
       </div>

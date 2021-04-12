@@ -16,7 +16,7 @@ import org.yunhyerim.api.common.service.AbstractService;
 @Service @RequiredArgsConstructor
 public class AnalysisServiceImpl extends AbstractService<Analysis> implements AnalysisService{
 	private final AnalysisRepository repo;
-	
+
 	@Override public long save(Analysis h) { return (repo.save(h) != null) ? 1 : 0;}
 	@Override public long delete(Analysis h) { repo.delete(h); return (getOne(h.getAnalNum()) == null) ? 1 : 0;}
 	@Override public long count() { return (long)repo.count();}

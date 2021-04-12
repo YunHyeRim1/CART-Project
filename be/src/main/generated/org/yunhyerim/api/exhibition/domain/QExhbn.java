@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QExhbn extends EntityPathBase<Exhbn> {
 
-    private static final long serialVersionUID = 1818385726L;
+    private static final long serialVersionUID = -1746497884L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -47,6 +47,10 @@ public class QExhbn extends EntityPathBase<Exhbn> {
     public final ListPath<org.yunhyerim.api.review.domain.Review, org.yunhyerim.api.review.domain.QReview> reviewList = this.<org.yunhyerim.api.review.domain.Review, org.yunhyerim.api.review.domain.QReview>createList("reviewList", org.yunhyerim.api.review.domain.Review.class, org.yunhyerim.api.review.domain.QReview.class, PathInits.DIRECT2);
 
     public final DateTimePath<java.util.Date> startDate = createDateTime("startDate", java.util.Date.class);
+
+    public final NumberPath<Float> totalScore = createNumber("totalScore", Float.class);
+
+    public final ListPath<org.yunhyerim.api.wishilist.domain.Wishlist, org.yunhyerim.api.wishilist.domain.QWishlist> wishLists = this.<org.yunhyerim.api.wishilist.domain.Wishlist, org.yunhyerim.api.wishilist.domain.QWishlist>createList("wishLists", org.yunhyerim.api.wishilist.domain.Wishlist.class, org.yunhyerim.api.wishilist.domain.QWishlist.class, PathInits.DIRECT2);
 
     public QExhbn(String variable) {
         this(Exhbn.class, forVariable(variable), INITS);
