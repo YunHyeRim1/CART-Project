@@ -91,6 +91,15 @@ public class UserController {
 		}
 		return ResponseEntity.ok(userService.save(u));
 	}
+
+	@PutMapping("/profileImage/{id}")
+	public ResponseEntity<String> editImage(@PathVariable long id, @RequestBody UserVO user){
+		System.out.println(user.getUserImage());
+		UserVO u = userService.getOne(id);
+		u.setUserImage(user.getUserImage());
+		return ResponseEntity.ok(userService.save(u));
+	}
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> delete(@PathVariable long id){
 		return ResponseEntity.ok(userService.delete(id));

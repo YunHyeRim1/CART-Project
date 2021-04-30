@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.NoArgsConstructor;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.recommend.domain.Recommend;
 import org.yunhyerim.api.user.domain.UserVO;
 

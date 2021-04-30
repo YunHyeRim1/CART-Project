@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QWishlist extends EntityPathBase<Wishlist> {
 
-    private static final long serialVersionUID = 1418868783L;
+    private static final long serialVersionUID = -111884215L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 

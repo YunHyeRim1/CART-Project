@@ -2,6 +2,7 @@ package org.yunhyerim.api.wishilist.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.exhibition.service.ExhbnServiceImpl;
 import org.yunhyerim.api.user.service.UserServiceImpl;
 import org.yunhyerim.api.wishilist.domain.WishDTO;

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.user.domain.UserVO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

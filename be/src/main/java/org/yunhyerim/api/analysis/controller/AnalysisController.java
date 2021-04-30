@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.exhibition.repository.ExhbnRepository;
 import org.yunhyerim.api.review.domain.ReviewExhbnDTO;
 import org.yunhyerim.api.review.repository.ReviewRepository;

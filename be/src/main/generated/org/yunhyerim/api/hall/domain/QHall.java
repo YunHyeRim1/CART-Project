@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QHall extends EntityPathBase<Hall> {
 
-    private static final long serialVersionUID = 1857889088L;
+    private static final long serialVersionUID = 553987558L;
 
     public static final QHall hall = new QHall("hall");
 

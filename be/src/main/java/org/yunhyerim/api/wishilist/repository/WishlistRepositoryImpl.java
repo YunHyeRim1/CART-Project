@@ -2,6 +2,7 @@ package org.yunhyerim.api.wishilist.repository;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.wishilist.domain.WishDTO;
 import org.yunhyerim.api.wishilist.domain.Wishlist;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;

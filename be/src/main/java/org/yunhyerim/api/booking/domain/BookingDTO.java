@@ -1,5 +1,6 @@
 package org.yunhyerim.api.booking.domain;
 
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.user.domain.UserVO;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

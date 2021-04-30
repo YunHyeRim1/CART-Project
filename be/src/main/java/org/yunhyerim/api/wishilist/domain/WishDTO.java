@@ -2,6 +2,7 @@ package org.yunhyerim.api.wishilist.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.user.domain.UserVO;
 
 @Data

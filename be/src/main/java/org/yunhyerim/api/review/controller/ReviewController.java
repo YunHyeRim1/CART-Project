@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
+import org.yunhyerim.api.exhibition.domain.Exhbn;
 import org.yunhyerim.api.exhibition.service.ExhbnServiceImpl;
 import org.yunhyerim.api.review.domain.ReviewDTO;
 import org.yunhyerim.api.review.domain.ReviewExhbnDTO;
